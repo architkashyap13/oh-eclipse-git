@@ -1,13 +1,11 @@
 package com.org.oh_backend;
 
-/**
- * Hello world!
- *
- */
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 public class App 
 {
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
+	public static void main(String[] args) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		System.out.println(encoder.encode("m123"));
+	}
 }
