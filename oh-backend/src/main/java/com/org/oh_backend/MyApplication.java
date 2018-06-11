@@ -1,11 +1,12 @@
 package com.org.oh_backend;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-public class App 
+@SpringBootApplication
+public class MyApplication 
 {
-	public static void main(String[] args) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		System.out.println(encoder.encode("m123"));
+	public static void main(String[] args) {		
+		SpringApplication.run(MyApplication.class, args);
 	}
 }

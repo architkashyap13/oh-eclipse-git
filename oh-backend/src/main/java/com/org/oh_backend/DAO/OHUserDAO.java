@@ -8,5 +8,5 @@ public interface OHUserDAO {
     
 	OHUser findById(int id);
      
-	OHUser findByUserName(String sso);
+	OHUser findByUserName(String userName);
 }

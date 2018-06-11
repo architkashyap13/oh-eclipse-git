@@ -3,10 +3,9 @@ package com.org.oh_backend.DAO;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaQuery;
 
 public abstract class AbstractDao<PK extends Serializable, T> {
 
@@ -17,29 +16,23 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 		this.persistentClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
 				.getActualTypeArguments()[1];
 	}
-
-	@Autowired
-	private SessionFactory sessionFactory;
-
-	protected Session getSession() {
-		return sessionFactory.getCurrentSession();
-	}
-
-	@SuppressWarnings("unchecked")
+	
+	@PersistenceContext	
+	private EntityManager entityManager;	
+	
 	public T getByKey(PK key) {
-		return (T) getSession().get(persistentClass, key);
+		return (T) entityManager.find(persistentClass, key);
 	}
 
 	public void persist(T entity) {
-		getSession().persist(entity);
+		entityManager.persist(entity);
 	}
 
 	public void delete(T entity) {
-		getSession().delete(entity);
+		entityManager.remove(entity);
 	}
-
-	protected Criteria createEntityCriteria() {
-		return getSession().createCriteria(persistentClass);
+	
+	protected EntityManager getEntityManager(){
+		return entityManager;
 	}
-
 }

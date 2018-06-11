@@ -4,7 +4,7 @@ import com.org.oh_backend.Model.OHUser;
 
 public interface OHUserService {
 	
-	void save(OHUser user);
+	boolean save(OHUser user);
     
     OHUser findById(int id);
      

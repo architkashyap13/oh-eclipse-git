@@ -12,20 +12,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "OH_USER")
+@Table(name = "ohuser")
 public class OHUser implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
-	@NotEmpty
+	@NotNull
+	//@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "USER_ID", unique = true, nullable = false)
 	private int userId;
-
+	
 	@NotEmpty
 	@Column(name = "USERNAME", unique = true, nullable = false)
 	private String userName;
@@ -35,12 +37,16 @@ public class OHUser implements Serializable {
 	private String password;
 
 	@NotEmpty
-	@Column(name = "FIRST_NAME", nullable = false)
+	@Column(name = "FIRSTNAME", nullable = false)
 	private String firstName;
 
 	@NotEmpty
-	@Column(name = "LAST_NAME", nullable = false)
+	@Column(name = "LASTNAME", nullable = false)
 	private String lastName;
+	
+	@NotEmpty
+	@Column(name = "EMAIL", unique = true, nullable = false)
+	private String email;
 
 	@NotEmpty
 	@Column(name = "STATUS", nullable = false)
@@ -90,6 +96,14 @@ public class OHUser implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getStatus() {
