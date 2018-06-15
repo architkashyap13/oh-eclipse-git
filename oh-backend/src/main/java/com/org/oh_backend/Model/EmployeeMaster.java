@@ -1,14 +1,48 @@
 package com.org.oh_backend.Model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+@Entity
+@Table(name="masterdata")
 public class EmployeeMaster {
 
+	@Id
+	@NotNull
+	@Column(name = "EMPLOYEE_ID", unique = true, nullable = false)
 	private int employeeId;
+	
+	@NotEmpty
+	@Column(name = "EMPLOYEE_NAME", nullable = false)
 	private String employeeName;
+	
+	@NotEmpty
+	@Column(name = "EMAIL", unique = true, nullable = false)
 	private String emailId;
+	
+	@NotEmpty
+	@Column(name = "BASE_LOCATION", nullable = false)
 	private String baseLocation;
+	
+	@NotEmpty
+	@Column(name = "CURRENT_LOCATION", nullable = false)
 	private String currentLocation;
+	
+	@NotEmpty
+	@Column(name = "IRM_EMAIL", nullable = false)
 	private String irmEmail;
+	
+	@NotEmpty
+	@Column(name = "SRM_EMAIL", nullable = false)
 	private String srmEmail;
+	
+	@NotEmpty
+	@Column(name = "HRBP_EMAIL", nullable = false)
 	private String hrbpEmail;
 	
 	public int getEmployeeId() {
