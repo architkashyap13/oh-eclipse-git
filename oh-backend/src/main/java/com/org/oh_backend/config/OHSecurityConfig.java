@@ -32,6 +32,7 @@ public class OHSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable()
 		    .authorizeRequests()
 		    .antMatchers("/OHUserOperations/**").hasAnyRole("ADMIN")
+		    .antMatchers("/EmployeeMasterOperations/**").hasAnyRole("ADMIN")
 		  	.antMatchers("/user/**").hasAnyRole("ADMIN","IRM","HRBP")
 			.and().httpBasic().realmName("MY APP REALM")
 			.authenticationEntryPoint(appAuthenticationEntryPoint);

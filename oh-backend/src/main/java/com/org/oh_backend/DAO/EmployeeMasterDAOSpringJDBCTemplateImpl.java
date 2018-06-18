@@ -2,7 +2,9 @@ package com.org.oh_backend.DAO;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,7 +21,7 @@ public class EmployeeMasterDAOSpringJDBCTemplateImpl implements EmployeeMasterDA
 	
 	public EmployeeMaster searchEmployeeById(int employeeId) {
 		 //return (EmployeeMaster) sessionFactory.getCurrentSession().createQuery("from masterdata where employeeId ="+employeeId+"").uniqueResult();
-		 return (EmployeeMaster) sessionFactory.getCurrentSession()
+		 return (EmployeeMaster) sessionFactory.openSession()
 												 .createCriteria(EmployeeMaster.class)
 												 .add(Restrictions.eq("employeeId", employeeId))
 												 .uniqueResult();
@@ -27,21 +29,29 @@ public class EmployeeMasterDAOSpringJDBCTemplateImpl implements EmployeeMasterDA
 
 	@SuppressWarnings("unchecked")
 	public List<EmployeeMaster> getAllEmployees() {
-		return sessionFactory.getCurrentSession()
+		return sessionFactory.openSession()
 		 .createCriteria(EmployeeMaster.class).list();
 	}
 
 	public boolean saveEmployee(EmployeeMaster employee) {
-		if(sessionFactory.getCurrentSession().save(employee) != null){
+		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.save(employee);
+		tx.commit();
+		session.flush();
+		
+		if(searchEmployeeById(employee.getEmployeeId()) != null){
 			return true;
-		}else{
+		}
+		else{
 			return false;
-		}		
+		}
 	}
 
 	public boolean deleteEmployee(int employeeId) {
-		EmployeeMaster employee = sessionFactory.getCurrentSession().load(EmployeeMaster.class, employeeId);
-		sessionFactory.getCurrentSession().delete(employee);
+		EmployeeMaster employee = sessionFactory.openSession().load(EmployeeMaster.class, employeeId);
+		sessionFactory.openSession().delete(employee);
 		
 		if(employee.getEmailId().equalsIgnoreCase(""))
 			return true;
@@ -50,7 +60,7 @@ public class EmployeeMasterDAOSpringJDBCTemplateImpl implements EmployeeMasterDA
 	}
 
 	public boolean updateEmployee(EmployeeMaster employee) {
-		if(sessionFactory.getCurrentSession().save(employee) != null){
+		if(sessionFactory.openSession().save(employee) != null){
 			return true;
 		}else{
 			return false;
