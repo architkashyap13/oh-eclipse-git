@@ -26,6 +26,14 @@ public class EmployeeMasterDAOSpringJDBCTemplateImpl implements EmployeeMasterDA
 												 .add(Restrictions.eq("employeeId", employeeId))
 												 .uniqueResult();
 	}
+	
+	public EmployeeMaster searchEmployeeByEmailId(String emailId) {
+		 //return (EmployeeMaster) sessionFactory.getCurrentSession().createQuery("from masterdata where employeeId ="+employeeId+"").uniqueResult();
+		 return (EmployeeMaster) sessionFactory.openSession()
+												 .createCriteria(EmployeeMaster.class)
+												 .add(Restrictions.eq("emailId", emailId))
+												 .uniqueResult();
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<EmployeeMaster> getAllEmployees() {

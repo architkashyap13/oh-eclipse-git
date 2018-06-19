@@ -25,6 +25,11 @@ public class EmployeeMasterServiceImpl implements EmployeeMasterService {
 	public EmployeeMaster searchEmployeeById(int employeeId) {
 		return employeeMasterDAO.searchEmployeeById(employeeId);
 	}
+	
+	@Override
+	public EmployeeMaster searchEmployeeByEmailId(String emailId) {
+		return employeeMasterDAO.searchEmployeeByEmailId(emailId);
+	}
 
 	@Override
 	public List<EmployeeMaster> getAllEmployees() {
