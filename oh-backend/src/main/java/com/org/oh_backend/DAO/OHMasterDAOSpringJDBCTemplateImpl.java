@@ -11,10 +11,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.org.oh_backend.Model.EmployeeMaster;
+import com.org.oh_backend.Model.OHMaster;
 
 @Repository("employeeMasterDAO")
 @Transactional
-public class EmployeeMasterDAOSpringJDBCTemplateImpl implements EmployeeMasterDAO {
+public class OHMasterDAOSpringJDBCTemplateImpl implements OHMasterDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -87,5 +88,46 @@ public class EmployeeMasterDAOSpringJDBCTemplateImpl implements EmployeeMasterDA
 			return false;
 		}
 	}
+
+	@Override
+	public boolean saveOH(OHMaster oh) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.save(oh);
+		tx.commit();
+		session.flush();
+		
+		if(searchOHByName(oh.getHolidayName()) != null){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	@Override
+	public OHMaster searchOHByName(String holidayName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OHMaster> getAllOHs() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean deleteOH() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean updateOH() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 }
