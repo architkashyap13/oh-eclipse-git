@@ -1,26 +1,45 @@
 package com.org.oh_backend.Model;
 
-import java.time.Instant;
+import java.io.Serializable;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 @Entity
 @Table(name="ohmaster")
-public class OHMaster {
+public class OHMaster implements Serializable{
 
-	@NotEmpty
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@NotNull
 	@Column(name = "HOLIDAY_NAME", nullable = false)
 	private String holidayName;
 	
 	@NotEmpty
 	@Column(name = "HOLIDAY_DATE", nullable = false)
-	private Instant holidayDate;
+	@DateTimeFormat(iso = ISO.DATE)
+	@JsonFormat(pattern = "YYYY-MM-dd")
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	private LocalDate holidayDate;
 	
-	@NotEmpty
+	@Id
+	@NotNull
 	@Column(name = "HOLIDAY_LOCATION", nullable = false)
 	private String holidayLocation;
 	
@@ -38,10 +57,10 @@ public class OHMaster {
 	public void setHolidayName(String holidayName) {
 		this.holidayName = holidayName;
 	}
-	public Instant getHolidayDate() {
+	public LocalDate getHolidayDate() {
 		return holidayDate;
 	}
-	public void setHolidayDate(Instant holidayDate) {
+	public void setHolidayDate(LocalDate holidayDate) {
 		this.holidayDate = holidayDate;
 	}
 	public String getHolidayLocation() {
